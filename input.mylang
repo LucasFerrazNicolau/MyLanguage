@@ -1,0 +1,10 @@
+programa
+	numero a, b;
+	texto l1;
+	
+	leia(a);
+	leia(b);
+	escreva(l1);
+	
+	a = a + b;
+fimprograma
