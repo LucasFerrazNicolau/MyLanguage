@@ -1,5 +1,12 @@
 // Generated from ../MyLang.g4 by ANTLR 4.9.2
 package parser;
+
+	import datastructures.MyLangSymbol;
+	import datastructures.MyLangVariable;
+	import datastructures.MyLangSymbolTable;
+	import exceptions.MyLangSemanticException;
+	import java.util.ArrayList;
+
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -81,6 +88,19 @@ public class MyLangLexer extends Lexer {
 	public Vocabulary getVocabulary() {
 		return VOCABULARY;
 	}
+
+
+		private int _tipo;
+		private String _varName;
+		private String _varValue;
+		private MyLangSymbolTable symbolTable = new MyLangSymbolTable();
+		private MyLangSymbol symbol;
+		
+		public void verificaID(String id) {
+			if (!symbolTable.exists(id)) {
+				throw new MyLangSemanticException("Symbol " + id + " not declared");
+			}
+		}
 
 
 	public MyLangLexer(CharStream input) {

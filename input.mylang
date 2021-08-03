@@ -5,6 +5,4 @@ programa
 	leia(a);
 	leia(b);
 	escreva(l1);
-	
-	a = a + b;
 fimprograma

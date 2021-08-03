@@ -15,6 +15,8 @@ package mainPackage;
  */
 
 import org.antlr.v4.runtime.*;
+
+import exceptions.MyLangSemanticException;
 import parser.MyLangLexer;
 import parser.MyLangParser;
 
@@ -31,6 +33,8 @@ public class MainClass {
 			parser.prog();
 			
 			System.out.println("Compilation Successful");
+		} catch (MyLangSemanticException ex) {
+			System.err.println("Semantic error - " + ex.getMessage());
 		} catch (Exception ex) {
 			System.err.println("ERROR " + ex.getMessage());
 		}

@@ -1,0 +1,22 @@
+package datastructures;
+
+public abstract class MyLangSymbol {
+	protected String name;
+	
+	public MyLangSymbol(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	@Override
+	public String toString() {
+		return "MyLangSymbol [name=" + name + "]";
+	}
+}

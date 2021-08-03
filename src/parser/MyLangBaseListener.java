@@ -1,6 +1,13 @@
 // Generated from ../MyLang.g4 by ANTLR 4.9.2
 package parser;
 
+	import datastructures.MyLangSymbol;
+	import datastructures.MyLangVariable;
+	import datastructures.MyLangSymbolTable;
+	import exceptions.MyLangSemanticException;
+	import java.util.ArrayList;
+
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
