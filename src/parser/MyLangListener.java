@@ -5,7 +5,14 @@ package parser;
 	import datastructures.MyLangVariable;
 	import datastructures.MyLangSymbolTable;
 	import exceptions.MyLangSemanticException;
+	import ast.MyLangProgram;
+	import ast.AbstractCommand;
+	import ast.CommandLeitura;
+	import ast.CommandEscrita;
+	import ast.CommandAtribuicao;
+	import ast.CommandSelecao;
 	import java.util.ArrayList;
+	import java.util.Stack;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -104,6 +111,16 @@ public interface MyLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCmdattrib(MyLangParser.CmdattribContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MyLangParser#cmdselecao}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdselecao(MyLangParser.CmdselecaoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MyLangParser#cmdselecao}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdselecao(MyLangParser.CmdselecaoContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MyLangParser#expr}.
 	 * @param ctx the parse tree

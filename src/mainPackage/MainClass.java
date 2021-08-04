@@ -6,9 +6,6 @@ package mainPackage;
  * Caminho para execução dos comandos:
  * cd C:\Users\Lucas\eclipse-workspace\MyLanguage\antlrlib
  * 
- * Inclusão temporária do .jar no CLASSPATH:
- * SET CLASSPATH=.;C:\Users\Lucas\eclipse-workspace\MyLanguage\antlrlib\antlr-4.9-complete.jar;%CLASSPATH%
- * 
  * Comando para criação do parser e lexer:
  * java -jar antlr-4.9.2-complete.jar ../MyLang.g4 -o ../src/parser -package parser
  * 
@@ -33,6 +30,10 @@ public class MainClass {
 			parser.prog();
 			
 			System.out.println("Compilation Successful");
+			
+			parser.exibeComandos();
+			
+			parser.generateCode();
 		} catch (MyLangSemanticException ex) {
 			System.err.println("Semantic error - " + ex.getMessage());
 		} catch (Exception ex) {

@@ -5,7 +5,14 @@ package parser;
 	import datastructures.MyLangVariable;
 	import datastructures.MyLangSymbolTable;
 	import exceptions.MyLangSemanticException;
+	import ast.MyLangProgram;
+	import ast.AbstractCommand;
+	import ast.CommandLeitura;
+	import ast.CommandEscrita;
+	import ast.CommandAtribuicao;
+	import ast.CommandSelecao;
 	import java.util.ArrayList;
+	import java.util.Stack;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -126,6 +133,18 @@ public class MyLangBaseListener implements MyLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCmdattrib(MyLangParser.CmdattribContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCmdselecao(MyLangParser.CmdselecaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCmdselecao(MyLangParser.CmdselecaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

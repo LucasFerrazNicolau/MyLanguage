@@ -33,4 +33,17 @@ public class MyLangVariable extends MyLangSymbol {
 	public String toString() {
 		return "MyLangVariable [name=" + name + ", type=" + type + ", value=" + value + "]";
 	}
+	
+	@Override
+	public String generateJavaCode() {
+		String str;
+		
+		if (type == NUMBER) {
+			str = "double";
+		} else {
+			str = "String";
+		}
+		
+		return str + " " + super.name + ";";
+	}
 }

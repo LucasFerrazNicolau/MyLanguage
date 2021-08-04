@@ -4,5 +4,15 @@ programa
 	
 	leia(a);
 	leia(b);
+	leia(l1);
+	
 	escreva(l1);
+	
+	a = 1 * b - 8;
+	
+	se ( a > b ) {
+		escreva(a);
+	} senao {
+		escreva(b);
+	}
 fimprograma

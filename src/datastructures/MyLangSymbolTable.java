@@ -1,5 +1,6 @@
 package datastructures;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MyLangSymbolTable {
@@ -19,5 +20,15 @@ public class MyLangSymbolTable {
 	
 	public MyLangSymbol get(String symbolName) {
 		return map.get(symbolName);
+	}
+	
+	public ArrayList<MyLangSymbol> getAll() {
+		ArrayList<MyLangSymbol> lista = new ArrayList<MyLangSymbol>();
+		
+		for (MyLangSymbol symbol : map.values()) {
+			lista.add(symbol);
+		}
+		
+		return lista;
 	}
 }

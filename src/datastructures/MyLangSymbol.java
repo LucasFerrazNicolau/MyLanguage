@@ -3,6 +3,8 @@ package datastructures;
 public abstract class MyLangSymbol {
 	protected String name;
 	
+	public abstract String generateJavaCode();
+	
 	public MyLangSymbol(String name) {
 		this.name = name;
 	}
