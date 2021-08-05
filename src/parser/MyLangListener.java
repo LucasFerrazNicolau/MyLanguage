@@ -11,6 +11,7 @@ package parser;
 	import ast.CommandEscrita;
 	import ast.CommandAtribuicao;
 	import ast.CommandSelecao;
+	import ast.CommandRepeticao;
 	import java.util.ArrayList;
 	import java.util.Stack;
 
@@ -121,6 +122,16 @@ public interface MyLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCmdselecao(MyLangParser.CmdselecaoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MyLangParser#cmdrepeticao}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdrepeticao(MyLangParser.CmdrepeticaoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MyLangParser#cmdrepeticao}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdrepeticao(MyLangParser.CmdrepeticaoContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MyLangParser#expr}.
 	 * @param ctx the parse tree

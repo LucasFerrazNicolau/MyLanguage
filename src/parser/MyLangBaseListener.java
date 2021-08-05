@@ -11,6 +11,7 @@ package parser;
 	import ast.CommandEscrita;
 	import ast.CommandAtribuicao;
 	import ast.CommandSelecao;
+	import ast.CommandRepeticao;
 	import java.util.ArrayList;
 	import java.util.Stack;
 
@@ -145,6 +146,18 @@ public class MyLangBaseListener implements MyLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCmdselecao(MyLangParser.CmdselecaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCmdrepeticao(MyLangParser.CmdrepeticaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCmdrepeticao(MyLangParser.CmdrepeticaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

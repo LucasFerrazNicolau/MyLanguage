@@ -1,18 +1,10 @@
 programa
 	numero a, b;
-	texto l1;
 	
-	leia(a);
-	leia(b);
-	leia(l1);
+	a = 0;
+	b = 5;
 	
-	escreva(l1);
-	
-	a = 1 * b - 8;
-	
-	se ( a > b ) {
-		escreva(a);
-	} senao {
-		escreva(b);
+	enquanto (a < b) {
+		a = a + 1;
 	}
 fimprograma

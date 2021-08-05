@@ -4,18 +4,13 @@ public class MainClass {
 		Scanner _key = new Scanner(System.in);
 double a;
 double b;
-String l1;
-a = _key.nextDouble();
+a = 0;
 
-b = _key.nextDouble();
+b = 5;
 
-l1 = _key.nextLine();
-
-System.out.println(l1);
-a = 1*b-8;
-
-if (a>b) {
-System.out.println(a);} else {System.out.println(b);}
+while (a<b) {
+a = a+1;
+}
 
 	}
 }
