@@ -1,11 +1,10 @@
 programa
-	numero a, b, c;
+	texto a;
+	numero b;
 	
-	a = 0;
-	b = 5;
-	c = 8;
+	a = "hello";
 	
-	enquanto (a < b) {
-		a = a + 1;
+	enquanto (a != "hello") {
+		a = a + "";
 	}
 fimprograma

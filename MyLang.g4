@@ -52,6 +52,31 @@ grammar MyLang;
 		}
 	}
 	
+	public void verificaVarType(String id, int type) {
+		String typeName;
+		
+		switch (type) {
+			case MyLangVariable.NUMBER:
+				typeName = "NUMBER";
+				break;
+			case MyLangVariable.TEXT:
+				typeName = "TEXT";
+				break;
+			default:
+				typeName = "INDEFINED TYPE";
+		}
+		
+		if (symbolTable.exists(id)) {
+			MyLangSymbol symbol = symbolTable.get(id);
+			if (symbol instanceof MyLangVariable) {
+				MyLangVariable _var = (MyLangVariable)symbol;
+				if (_var.getType() != type) {
+					throw new MyLangSemanticException("Symbol " + id + " is not " + typeName + " type but is treated as " + typeName);
+				}
+			}
+		}
+	}
+	
 	public void exibeComandos() {
 		for (AbstractCommand c : program.getComandos()) {
 			System.out.println(c);
@@ -172,14 +197,14 @@ cmdselecao	: 'se' AP
 				verificaID(_input.LT(-1).getText());
 				marcaVariavelUsada(_input.LT(-1).getText());
 			}
-			| NUMBER ) { _exprSelection = _input.LT(-1).getText(); }
+			| NUMBER | TEXT ) { _exprSelection = _input.LT(-1).getText(); }
 			OPREL { _exprSelection += _input.LT(-1).getText(); }
 			( ID
 			{
 				verificaID(_input.LT(-1).getText());
 				marcaVariavelUsada(_input.LT(-1).getText());
 			}
-			| NUMBER ) { _exprSelection += _input.LT(-1).getText(); }
+			| NUMBER | TEXT ) { _exprSelection += _input.LT(-1).getText(); }
 			FP ACH
 			{
 				currentThread = new ArrayList<AbstractCommand>();
@@ -212,14 +237,14 @@ cmdrepeticao	: 'enquanto' AP
 					verificaID(_input.LT(-1).getText());
 					marcaVariavelUsada(_input.LT(-1).getText());
 				}
-				| NUMBER ) { _exprRepetition = _input.LT(-1).getText(); }
+				| NUMBER | TEXT ) { _exprRepetition = _input.LT(-1).getText(); }
 				OPREL { _exprRepetition += _input.LT(-1).getText(); }
 				( ID
 				{
 					verificaID(_input.LT(-1).getText());
 					marcaVariavelUsada(_input.LT(-1).getText());
 				}
-				| NUMBER ) { _exprRepetition += _input.LT(-1).getText(); }
+				| NUMBER | TEXT ) { _exprRepetition += _input.LT(-1).getText(); }
 				FP ACH
 				{
 					currentThread = new ArrayList<AbstractCommand>();
@@ -250,6 +275,12 @@ termo	: ID
 		| NUMBER
 		{
 			_exprContent += _input.LT(-1).getText();
+			verificaVarType(_exprID, MyLangVariable.NUMBER);
+		}
+		| TEXT
+		{
+			_exprContent += _input.LT(-1).getText();
+			verificaVarType(_exprID, MyLangVariable.TEXT);
 		}
 		;
 
@@ -285,6 +316,9 @@ ID	: [a-z] ( [a-z] | [A-Z] | [0-9] )*
 
 NUMBER	: [0-9]+ ('.' [0-9]+)?
 	;
+
+TEXT	: '"' (.)*? '"'
+		;
 
 WS	: ( ' ' | '\t' | '\n' | '\r' ) -> skip
 	;
