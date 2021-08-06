@@ -1,8 +1,9 @@
 programa
-	numero a, b;
+	numero a, b, c;
 	
 	a = 0;
 	b = 5;
+	c = 8;
 	
 	enquanto (a < b) {
 		a = a + 1;

@@ -32,7 +32,7 @@ public class MainClass {
 			System.out.println("Compilation Successful");
 			
 			parser.exibeComandos();
-			
+			parser.verificaVariaveisUtilizadas();
 			parser.generateCode();
 		} catch (MyLangSemanticException ex) {
 			System.err.println("Semantic error - " + ex.getMessage());

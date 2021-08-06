@@ -42,6 +42,16 @@ grammar MyLang;
 		}
 	}
 	
+	public void marcaVariavelUsada(String id) {
+		if (symbolTable.exists(id)) {
+			MyLangSymbol symbol = symbolTable.get(id);
+			if (symbol instanceof MyLangVariable) {
+				MyLangVariable _var = (MyLangVariable)symbol;
+				_var.setUsed(true);
+			}
+		}
+	}
+	
 	public void exibeComandos() {
 		for (AbstractCommand c : program.getComandos()) {
 			System.out.println(c);
@@ -50,6 +60,17 @@ grammar MyLang;
 	
 	public void generateCode() {
 		program.generateTarget();
+	}
+	
+	public void verificaVariaveisUtilizadas() {
+		for (MyLangSymbol symbol : symbolTable.getAll()) {
+			if (symbol instanceof MyLangVariable) {
+				MyLangVariable _var = (MyLangVariable)symbol;
+				if (!_var.isUsed()) {
+					System.out.println("Warning - Symbol " + _var.getName() + " declared but not used");
+				}
+			}
+		}
 	}
 }
 
@@ -119,6 +140,7 @@ cmdleitura	: 'leia' AP ID
 cmdescrita	: 'escreva' AP ID
 			{
 				verificaID(_input.LT(-1).getText());
+				marcaVariavelUsada(_input.LT(-1).getText());
 				_writeID = _input.LT(-1).getText();
 			}
 			FP SC
@@ -145,9 +167,19 @@ cmdattrib	: ID
 			;
 
 cmdselecao	: 'se' AP
-			ID { _exprSelection = _input.LT(-1).getText(); }
+			( ID
+			{
+				verificaID(_input.LT(-1).getText());
+				marcaVariavelUsada(_input.LT(-1).getText());
+			}
+			| NUMBER ) { _exprSelection = _input.LT(-1).getText(); }
 			OPREL { _exprSelection += _input.LT(-1).getText(); }
-			( ID | NUMBER ) { _exprSelection += _input.LT(-1).getText(); }
+			( ID
+			{
+				verificaID(_input.LT(-1).getText());
+				marcaVariavelUsada(_input.LT(-1).getText());
+			}
+			| NUMBER ) { _exprSelection += _input.LT(-1).getText(); }
 			FP ACH
 			{
 				currentThread = new ArrayList<AbstractCommand>();
@@ -175,9 +207,19 @@ cmdselecao	: 'se' AP
 			;
 
 cmdrepeticao	: 'enquanto' AP
-				( ID | NUMBER ) { _exprRepetition = _input.LT(-1).getText(); }
+				( ID
+				{
+					verificaID(_input.LT(-1).getText());
+					marcaVariavelUsada(_input.LT(-1).getText());
+				}
+				| NUMBER ) { _exprRepetition = _input.LT(-1).getText(); }
 				OPREL { _exprRepetition += _input.LT(-1).getText(); }
-				( ID | NUMBER ) { _exprRepetition += _input.LT(-1).getText(); }
+				( ID
+				{
+					verificaID(_input.LT(-1).getText());
+					marcaVariavelUsada(_input.LT(-1).getText());
+				}
+				| NUMBER ) { _exprRepetition += _input.LT(-1).getText(); }
 				FP ACH
 				{
 					currentThread = new ArrayList<AbstractCommand>();
@@ -202,6 +244,7 @@ expr	: termo ( OP
 termo	: ID
 		{
 			verificaID(_input.LT(-1).getText());
+			marcaVariavelUsada(_input.LT(-1).getText());
 			_exprContent += _input.LT(-1).getText();
 		}
 		| NUMBER

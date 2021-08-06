@@ -126,6 +126,16 @@ public class MyLangLexer extends Lexer {
 			}
 		}
 		
+		public void marcaVariavelUsada(String id) {
+			if (symbolTable.exists(id)) {
+				MyLangSymbol symbol = symbolTable.get(id);
+				if (symbol instanceof MyLangVariable) {
+					MyLangVariable _var = (MyLangVariable)symbol;
+					_var.setUsed(true);
+				}
+			}
+		}
+		
 		public void exibeComandos() {
 			for (AbstractCommand c : program.getComandos()) {
 				System.out.println(c);
@@ -134,6 +144,17 @@ public class MyLangLexer extends Lexer {
 		
 		public void generateCode() {
 			program.generateTarget();
+		}
+		
+		public void verificaVariaveisUtilizadas() {
+			for (MyLangSymbol symbol : symbolTable.getAll()) {
+				if (symbol instanceof MyLangVariable) {
+					MyLangVariable _var = (MyLangVariable)symbol;
+					if (!_var.isUsed()) {
+						System.out.println("Warning - Symbol " + _var.getName() + " declared but not used");
+					}
+				}
+			}
 		}
 
 

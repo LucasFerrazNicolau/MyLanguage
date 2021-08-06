@@ -6,11 +6,13 @@ public class MyLangVariable extends MyLangSymbol {
 	
 	private int type;
 	private String value;
+	private boolean used;
 	
 	public MyLangVariable(String name, int type, String value) {
 		super(name);
 		this.setType(type);
 		this.setValue(value);
+		used = false;
 	}
 
 	public int getType() {
@@ -27,6 +29,14 @@ public class MyLangVariable extends MyLangSymbol {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+	
+	public boolean isUsed() {
+		return used;
+	}
+	
+	public void setUsed(boolean used) {
+		this.used = used;
 	}
 	
 	@Override
