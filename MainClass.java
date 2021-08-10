@@ -4,7 +4,12 @@ public class MainClass {
 		Scanner _key = new Scanner(System.in);
 String a;
 double b;
+boolean c;
 a = "hello";
+
+b = 3.78;
+
+c = true;
 
 while (a!="hello") {
 a = a+"";

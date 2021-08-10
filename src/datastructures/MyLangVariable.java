@@ -3,6 +3,7 @@ package datastructures;
 public class MyLangVariable extends MyLangSymbol {
 	public static final int NUMBER = 0;
 	public static final int TEXT = 1;
+	public static final int BOOLEAN = 2;
 	
 	private int type;
 	private String value;
@@ -50,8 +51,10 @@ public class MyLangVariable extends MyLangSymbol {
 		
 		if (type == NUMBER) {
 			str = "double";
-		} else {
+		} else if (type == TEXT) {
 			str = "String";
+		} else {
+			str = "boolean";
 		}
 		
 		return str + " " + super.name + ";";

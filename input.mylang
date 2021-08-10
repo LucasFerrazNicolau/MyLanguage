@@ -1,8 +1,15 @@
 programa
 	texto a;
 	numero b;
+	logico c;
 	
 	a = "hello";
+	b = 3.78;
+	c = verdadeiro;
+	
+	se (c == verdadeiro) {
+		a = "enter";
+	}
 	
 	enquanto (a != "hello") {
 		a = a + "";

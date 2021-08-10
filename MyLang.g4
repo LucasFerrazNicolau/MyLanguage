@@ -136,6 +136,7 @@ declaravar	: tipo ID
 
 tipo	: 'numero' { _tipo = MyLangVariable.NUMBER; }
 		| 'texto' { _tipo = MyLangVariable.TEXT; }
+		| 'logico' { _tipo = MyLangVariable.BOOLEAN; }
 		;
 
 bloco	:
@@ -197,15 +198,19 @@ cmdselecao	: 'se' AP
 				verificaID(_input.LT(-1).getText());
 				marcaVariavelUsada(_input.LT(-1).getText());
 			}
-			| NUMBER | TEXT ) { _exprSelection = _input.LT(-1).getText(); }
-			OPREL { _exprSelection += _input.LT(-1).getText(); }
+			| NUMBER { _exprSelection = _input.LT(-1).getText(); }
+			| TEXT { _exprSelection = _input.LT(-1).getText(); }
+			| BOOLEAN { _exprSelection = (_input.LT(-1).getText().equals("verdadeiro") ? "true" : "false"); }
+			) OPREL { _exprSelection += _input.LT(-1).getText(); }
 			( ID
 			{
 				verificaID(_input.LT(-1).getText());
 				marcaVariavelUsada(_input.LT(-1).getText());
 			}
-			| NUMBER | TEXT ) { _exprSelection += _input.LT(-1).getText(); }
-			FP ACH
+			| NUMBER { _exprSelection = _input.LT(-1).getText(); }
+			| TEXT { _exprSelection = _input.LT(-1).getText(); }
+			| BOOLEAN { _exprSelection = (_input.LT(-1).getText().equals("verdadeiro") ? "true" : "false"); }
+			) FP ACH
 			{
 				currentThread = new ArrayList<AbstractCommand>();
 				stack.push(currentThread);
@@ -237,14 +242,14 @@ cmdrepeticao	: 'enquanto' AP
 					verificaID(_input.LT(-1).getText());
 					marcaVariavelUsada(_input.LT(-1).getText());
 				}
-				| NUMBER | TEXT ) { _exprRepetition = _input.LT(-1).getText(); }
+				| NUMBER | TEXT | BOOLEAN ) { _exprRepetition = _input.LT(-1).getText(); }
 				OPREL { _exprRepetition += _input.LT(-1).getText(); }
 				( ID
 				{
 					verificaID(_input.LT(-1).getText());
 					marcaVariavelUsada(_input.LT(-1).getText());
 				}
-				| NUMBER | TEXT ) { _exprRepetition += _input.LT(-1).getText(); }
+				| NUMBER | TEXT | BOOLEAN ) { _exprRepetition += _input.LT(-1).getText(); }
 				FP ACH
 				{
 					currentThread = new ArrayList<AbstractCommand>();
@@ -282,6 +287,11 @@ termo	: ID
 			_exprContent += _input.LT(-1).getText();
 			verificaVarType(_exprID, MyLangVariable.TEXT);
 		}
+		| BOOLEAN
+		{
+			_exprContent += (_input.LT(-1).getText().equals("verdadeiro") ? "true" : "false");
+			verificaVarType(_exprID, MyLangVariable.BOOLEAN);
+		}
 		;
 
 AP	: '('
@@ -311,14 +321,17 @@ FCH	: '}'
 OPREL	: '>' | '<' | '>=' | '<=' | '==' | '!='
 		;
 
-ID	: [a-z] ( [a-z] | [A-Z] | [0-9] )*
-	;
-
 NUMBER	: [0-9]+ ('.' [0-9]+)?
-	;
+		;
 
 TEXT	: '"' (.)*? '"'
 		;
+
+BOOLEAN	: 'verdadeiro' | 'falso'
+		;
+
+ID	: [a-z] ( [a-z] | [A-Z] | [0-9] )*
+	;
 
 WS	: ( ' ' | '\t' | '\n' | '\r' ) -> skip
 	;
