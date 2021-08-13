@@ -19,7 +19,7 @@ public class CommandPara extends AbstractCommand {
 	public String generateJavaCode() {
 		StringBuilder str = new StringBuilder();
 		
-		str.append("for (" + id + " = " + initialIndex + "; i <= " + finalIndex + "; i++) {\n");
+		str.append("for (" + id + " = " + initialIndex + "; " + id + " <= " + finalIndex + "; " + id + "++) {\n");
 		for (AbstractCommand cmd : listaFor) {
 			str.append(cmd.generateJavaCode());
 		}

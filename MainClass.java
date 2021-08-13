@@ -13,12 +13,12 @@ d = 3.78;
 c = true;
 
 if (true) {
-}
+System.out.println(a);}
 while (a!="hello") {
-a = a+"a";
+a = "42";
 }
 
-for (b = 3; i <= 45; i++) {
+for (b = 3; b <= 45; b++) {
 System.out.println(b);}
 
 	}
