@@ -1,17 +1,22 @@
 programa
 	texto a;
-	numero b;
+	inteiro b;
 	logico c;
+	numero d;
 	
 	a = "hello";
-	b = 3.78;
+	d = 3.78;
 	c = verdadeiro;
 	
 	se (c == verdadeiro) {
-		a = "enter";
+		escreva(a);
 	}
 	
 	enquanto (a != "hello") {
-		a = a + "";
+		a = 42;
+	}
+	
+	para (b de 3 ate 45) {
+		escreva(e);
 	}
 fimprograma

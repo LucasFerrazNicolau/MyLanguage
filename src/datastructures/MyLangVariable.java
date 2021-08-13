@@ -4,6 +4,7 @@ public class MyLangVariable extends MyLangSymbol {
 	public static final int NUMBER = 0;
 	public static final int TEXT = 1;
 	public static final int BOOLEAN = 2;
+	public static final int INTEGER = 3;
 	
 	private int type;
 	private String value;
@@ -53,8 +54,10 @@ public class MyLangVariable extends MyLangSymbol {
 			str = "double";
 		} else if (type == TEXT) {
 			str = "String";
-		} else {
+		} else if (type == BOOLEAN) {
 			str = "boolean";
+		} else {
+			str = "int";
 		}
 		
 		return str + " " + super.name + ";";

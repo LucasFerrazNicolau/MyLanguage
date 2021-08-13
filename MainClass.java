@@ -3,17 +3,23 @@ public class MainClass {
 	public static void main(String args[]) {
 		Scanner _key = new Scanner(System.in);
 String a;
-double b;
+int b;
 boolean c;
+double d;
 a = "hello";
 
-b = 3.78;
+d = 3.78;
 
 c = true;
 
-while (a!="hello") {
-a = a+"";
+if (true) {
 }
+while (a!="hello") {
+a = a+"a";
+}
+
+for (b = 3; i <= 45; i++) {
+System.out.println(b);}
 
 	}
 }

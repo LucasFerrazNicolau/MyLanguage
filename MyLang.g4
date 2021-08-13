@@ -12,6 +12,7 @@ grammar MyLang;
 	import ast.CommandAtribuicao;
 	import ast.CommandSelecao;
 	import ast.CommandRepeticao;
+	import ast.CommandPara;
 	import java.util.ArrayList;
 	import java.util.Stack;
 }
@@ -35,6 +36,10 @@ grammar MyLang;
 	private ArrayList<AbstractCommand> listaFalse;
 	private String _exprRepetition;
 	private ArrayList<AbstractCommand> listaWhile;
+	private String _forID;
+	private String _initialIndex;
+	private String _finalIndex;
+	private ArrayList<AbstractCommand> listaFor;
 	
 	public void verificaID(String id) {
 		if (!symbolTable.exists(id)) {
@@ -61,6 +66,12 @@ grammar MyLang;
 				break;
 			case MyLangVariable.TEXT:
 				typeName = "TEXT";
+				break;
+			case MyLangVariable.BOOLEAN:
+				typeName = "BOOLEAN";
+				break;
+			case MyLangVariable.INTEGER:
+				typeName = "INTEGER";
 				break;
 			default:
 				typeName = "INDEFINED TYPE";
@@ -137,6 +148,7 @@ declaravar	: tipo ID
 tipo	: 'numero' { _tipo = MyLangVariable.NUMBER; }
 		| 'texto' { _tipo = MyLangVariable.TEXT; }
 		| 'logico' { _tipo = MyLangVariable.BOOLEAN; }
+		| 'inteiro' { _tipo = MyLangVariable.INTEGER; }
 		;
 
 bloco	:
@@ -147,7 +159,7 @@ bloco	:
 		(comando)+
 		;
 
-comando	: cmdleitura | cmdescrita | cmdattrib | cmdselecao | cmdrepeticao
+comando	: cmdleitura | cmdescrita | cmdattrib | cmdselecao | cmdrepeticao | cmdpara
 		;
 
 cmdleitura	: 'leia' AP ID
@@ -219,6 +231,7 @@ cmdselecao	: 'se' AP
 			FCH
 			{
 				listaTrue = stack.pop();
+				listaFalse = new ArrayList<AbstractCommand>();
 			}
 			( 'senao'
 				ACH
@@ -230,10 +243,12 @@ cmdselecao	: 'se' AP
 				FCH
 				{
 					listaFalse = stack.pop();
-					CommandSelecao cmd = new CommandSelecao(_exprSelection, listaTrue, listaFalse);
-					stack.peek().add(cmd);
 				}
 			)?
+			{
+				CommandSelecao cmd = new CommandSelecao(_exprSelection, listaTrue, listaFalse);
+				stack.peek().add(cmd);
+			}
 			;
 
 cmdrepeticao	: 'enquanto' AP
@@ -264,6 +279,29 @@ cmdrepeticao	: 'enquanto' AP
 				}
 				;
 
+cmdpara	: 'para' AP ID
+		{
+			_forID = _input.LT(-1).getText();
+			verificaID(_forID);
+			verificaVarType(_forID, MyLangVariable.INTEGER);
+			marcaVariavelUsada(_forID);
+		}
+		'de' INTEGER { _initialIndex =  _input.LT(-1).getText(); }
+		'ate' INTEGER { _finalIndex =  _input.LT(-1).getText(); }
+		FP ACH
+		{
+			currentThread = new ArrayList<AbstractCommand>();
+			stack.push(currentThread);
+		}
+		(comando)+
+		FCH
+		{
+			listaFor = stack.pop();
+			CommandPara cmd = new CommandPara(_forID, _initialIndex, _finalIndex, listaFor);
+			stack.peek().add(cmd);
+		}
+		;
+
 expr	: termo ( OP
 		{
 			_exprContent += _input.LT(-1).getText();
@@ -292,6 +330,11 @@ termo	: ID
 			_exprContent += (_input.LT(-1).getText().equals("verdadeiro") ? "true" : "false");
 			verificaVarType(_exprID, MyLangVariable.BOOLEAN);
 		}
+		| INTEGER
+		{
+			_exprContent += _input.LT(-1).getText();
+			verificaVarType(_exprID, MyLangVariable.INTEGER);
+		}
 		;
 
 AP	: '('
@@ -319,6 +362,9 @@ FCH	: '}'
 	;
 
 OPREL	: '>' | '<' | '>=' | '<=' | '==' | '!='
+		;
+
+INTEGER	: [0-9]+
 		;
 
 NUMBER	: [0-9]+ ('.' [0-9]+)?
